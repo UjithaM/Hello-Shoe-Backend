@@ -1,8 +1,6 @@
 package software.ujithamigara.helloShoesSystem.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +19,10 @@ public class CustomerEntity implements SuperEntity {
     @Id
     private String customerId;
     private String name;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     private Date jionDate;
+    @Enumerated(EnumType.STRING)
     private Level level;
     private int totalPoints;
     private Date dob;
@@ -32,6 +32,7 @@ public class CustomerEntity implements SuperEntity {
     private String addressLine04;
     private String addressLine05;
     private String contactNumber;
+    @Column(unique = true)
     private String email;
     private Timestamp recentPurchaseDate;
 }
