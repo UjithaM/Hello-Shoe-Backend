@@ -20,11 +20,11 @@ public class UserController {
        return ResponseEntity.ok(authenticationService.signUp(signUpReq));
     }
     //signIn
-    @PostMapping("/signin")
+    @GetMapping("/signin")
     public ResponseEntity<JwtAuthResponse> signIn(@RequestBody SignIn signInReq) {
         return ResponseEntity.ok(authenticationService.signIn(signInReq));
     }
-    @PostMapping("/refresh")
+    @PutMapping("/refresh")
     public ResponseEntity<JwtAuthResponse> refreshToken(@RequestParam ("refreshToken") String refreshToken) {
         return ResponseEntity.ok(authenticationService.refreshToken(refreshToken));
     }
