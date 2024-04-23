@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import software.ujithamigara.helloShoesSystem.dto.CustomerDTO;
+import software.ujithamigara.helloShoesSystem.dto.SupplierDTO;
 import software.ujithamigara.helloShoesSystem.dto.UserDTO;
 import software.ujithamigara.helloShoesSystem.entity.CustomerEntity;
+import software.ujithamigara.helloShoesSystem.entity.SupplierEntity;
 import software.ujithamigara.helloShoesSystem.entity.UserEntity;
 
 import java.util.List;
@@ -27,7 +29,18 @@ public class Mapping {
     public UserEntity toUserEntity(UserDTO userDTO) {
         return mapper.map(userDTO, UserEntity.class);
     }
-    public UserDTO toUserDTO(UserEntity userEntity) {
-        return  mapper.map(userEntity, UserDTO.class);
+    public void toUserDTO(UserEntity userEntity) {
+        mapper.map(userEntity, UserDTO.class);
+    }
+
+    //SupplierMapping
+    public SupplierDTO toSupplierDTO(SupplierEntity supplierEntity) {
+        return  mapper.map(supplierEntity, SupplierDTO.class);
+    }
+    public SupplierEntity toSupplierEntity(SupplierDTO supplierDTO) {
+        return  mapper.map(supplierDTO, SupplierEntity.class);
+    }
+    public List<SupplierDTO> toSupplierDTOList(List<SupplierEntity> supplierEntities) {
+        return mapper.map(supplierEntities, List.class);
     }
 }
