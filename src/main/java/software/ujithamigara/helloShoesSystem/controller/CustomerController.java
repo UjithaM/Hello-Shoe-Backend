@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/customer")
 @RequiredArgsConstructor
-public class Customer {
+public class CustomerController {
     private final CustomerService customerService;
     @GetMapping("/health")
     public String healthTest(){
@@ -38,8 +38,9 @@ public class Customer {
     }
 
     @PutMapping("/{id}")
-    public void updateCustomer(@PathVariable String id, @RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity<?> updateCustomer(@PathVariable String id, @RequestBody CustomerDTO customerDTO) {
         customerService.updateCustomer(id, customerDTO);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

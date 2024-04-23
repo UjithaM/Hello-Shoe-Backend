@@ -17,7 +17,7 @@ import java.util.Date;
 @Entity
 public class CustomerEntity implements SuperEntity {
     @Id
-    private String customerId;
+    private String customerCode;
     private String name;
     @Enumerated(EnumType.STRING)
     private Gender gender;
