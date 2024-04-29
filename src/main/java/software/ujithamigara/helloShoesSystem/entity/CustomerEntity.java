@@ -26,11 +26,11 @@ public class CustomerEntity implements SuperEntity {
     private Level level;
     private int totalPoints;
     private Date dob;
-    private String addressLine01;
-    private String addressLine02;
-    private String addressLine03;
-    private String addressLine04;
-    private String addressLine05;
+    private String addressNo;
+    private String lane;
+    private String mainCity;
+    private String mainState;
+    private String postalCode;
     private String contactNumber;
     @Column(unique = true)
     private String email;

@@ -17,14 +17,14 @@ public class SupplierEntity {
     private String name;
     @Enumerated(EnumType.STRING)
     private Category category;
-    private String addressLine01;
-    private String addressLine02;
-    private String addressLine03;
-    private String addressLine04;
-    private String addressLine05;
-    private String addressLine06;
-    private String contactNumber1;
-    private String contactNumber2;
+    private String addressNo;
+    private String lane;
+    private String mainCity;
+    private String mainState;
+    private String postalCode;
+    private String country;
+    private String mobileNumber;
+    private String landlineNumber;
     @Column(unique = true)
     private String email;
 }
