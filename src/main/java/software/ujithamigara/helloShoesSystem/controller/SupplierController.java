@@ -3,7 +3,6 @@ package software.ujithamigara.helloShoesSystem.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import software.ujithamigara.helloShoesSystem.dto.CustomerDTO;
 import software.ujithamigara.helloShoesSystem.dto.SupplierDTO;
 import software.ujithamigara.helloShoesSystem.service.SupplierService;
 
