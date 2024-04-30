@@ -27,4 +27,6 @@ public class OrderEntity implements SuperEntity{
     @ManyToOne
     @JoinColumn(name = "employeeCode", referencedColumnName = "employeeCode")
     private EmployeeEntity employeeEntity;
+    @OneToOne(mappedBy = "order")
+    private RefundEntity refundEntity;
 }
