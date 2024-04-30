@@ -9,6 +9,7 @@ import software.ujithamigara.helloShoesSystem.entity.enums.Level;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,4 +36,6 @@ public class CustomerEntity implements SuperEntity {
     @Column(unique = true)
     private String email;
     private Timestamp recentPurchaseDate;
+    @OneToMany(mappedBy = "customerEntity")
+    private List<OrderEntity> orderEntities;
 }
