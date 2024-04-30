@@ -1,5 +1,9 @@
 package software.ujithamigara.helloShoesSystem.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,18 +16,18 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class CustomerDTO {
-    private String customerId;
+    private String customerCode;
     private String name;
     private Gender gender;
     private Date jionDate;
     private Level level;
     private int totalPoints;
     private Date dob;
-    private String addressLine01;
-    private String addressLine02;
-    private String addressLine03;
-    private String addressLine04;
-    private String addressLine05;
+    private String addressNo;
+    private String lane;
+    private String mainCity;
+    private String mainState;
+    private String postalCode;
     private String contactNumber;
     private String email;
     private Timestamp recentPurchaseDate;
