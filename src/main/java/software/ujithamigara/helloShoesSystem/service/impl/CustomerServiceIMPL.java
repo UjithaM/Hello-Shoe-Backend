@@ -21,7 +21,7 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Override
     public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
-        customerDTO.setCustomerId(UUID.randomUUID().toString());
+        customerDTO.setCustomerCode(UUID.randomUUID().toString());
         return mapping.toCustomerDTO(repo.save(mapping.toCustomer(customerDTO)));
     }
 
@@ -49,12 +49,13 @@ public class CustomerServiceIMPL implements CustomerService {
         customer.setLevel(customerDTO.getLevel());
         customer.setTotalPoints(customerDTO.getTotalPoints());
         customer.setDob(customerDTO.getDob());
-        customer.setAddressLine01(customerDTO.getAddressLine01());
-        customer.setAddressLine02(customerDTO.getAddressLine02());
-        customer.setAddressLine03(customerDTO.getAddressLine03());
-        customer.setAddressLine04(customerDTO.getAddressLine04());
-        customer.setAddressLine05(customerDTO.getAddressLine05());
+        customer.setAddressNo(customerDTO.getAddressNo());
+        customer.setLane(customerDTO.getLane());
+        customer.setMainCity(customerDTO.getMainCity());
+        customer.setMainState(customerDTO.getMainState());
+        customer.setPostalCode(customerDTO.getPostalCode());
         customer.setContactNumber(customerDTO.getContactNumber());
+
         customer.setEmail(customerDTO.getEmail());
         customer.setRecentPurchaseDate(customerDTO.getRecentPurchaseDate());
         repo.save(customer);
