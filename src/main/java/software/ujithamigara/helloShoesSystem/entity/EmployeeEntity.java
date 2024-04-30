@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @Table(name = "employee")
 @Entity
-public class EmployeeEntity {
+public class EmployeeEntity implements SuperEntity{
     @Id
     private String employeeCode;
     private String name;
@@ -41,4 +41,7 @@ public class EmployeeEntity {
     private String guardianContact;
     @OneToMany(mappedBy = "employeeEntity")
     private List<OrderEntity> orderEntities;
+
+    @OneToMany(mappedBy = "employeeEntity")
+    private List<RefundEntity> refundEntities;
 }
