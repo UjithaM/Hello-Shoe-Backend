@@ -6,12 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import software.ujithamigara.helloShoesSystem.entity.enums.Category;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Table(name = "supplier")
 @Entity
-public class SupplierEntity {
+public class SupplierEntity implements SuperEntity{
     @Id
     private String supplierCode;
     private String name;
@@ -27,4 +29,6 @@ public class SupplierEntity {
     private String landlineNumber;
     @Column(unique = true)
     private String email;
+    @OneToMany(mappedBy = "supplierEntity")
+    private List<ItemEntity> itemEntities;
 }
