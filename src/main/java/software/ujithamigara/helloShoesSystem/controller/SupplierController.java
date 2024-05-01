@@ -2,6 +2,7 @@ package software.ujithamigara.helloShoesSystem.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import software.ujithamigara.helloShoesSystem.dto.SupplierDTO;
 import software.ujithamigara.helloShoesSystem.service.SupplierService;
@@ -19,6 +20,13 @@ public class SupplierController {
     @PostMapping
     public SupplierDTO saveSupplier(@RequestBody SupplierDTO supplierDTO) {
         return supplierService.saveSupplier(supplierDTO);
+    }
+
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public Iterable<SupplierDTO> getAllSupplier() {
+        return supplierService.getAllSupplier();
     }
 
     @GetMapping("/{id}")
