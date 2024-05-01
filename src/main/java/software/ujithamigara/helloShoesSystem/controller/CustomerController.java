@@ -24,8 +24,6 @@ public class CustomerController {
         return customerService.saveCustomer(customer);
     }
 
-
-
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public List<CustomerDTO> getAllCustomers() {

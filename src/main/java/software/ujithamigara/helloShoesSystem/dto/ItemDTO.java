@@ -22,5 +22,5 @@ public class ItemDTO {
     private int quantity;
     private String itemStatus;
     private SupplierDTO supplierDTO;
-    private List<Order_itemDTO> orderItemDTOS;
+    private List<Order_itemDTO> orderItemDTO;
 }
