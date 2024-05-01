@@ -1,17 +1,17 @@
 package software.ujithamigara.helloShoesSystem.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import software.ujithamigara.helloShoesSystem.entity.OrderEntity;
 import software.ujithamigara.helloShoesSystem.entity.enums.Gender;
 import software.ujithamigara.helloShoesSystem.entity.enums.Level;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -31,4 +31,5 @@ public class CustomerDTO {
     private String contactNumber;
     private String email;
     private Timestamp recentPurchaseDate;
+    private List<OrderDTO> orderDTOS;
 }
