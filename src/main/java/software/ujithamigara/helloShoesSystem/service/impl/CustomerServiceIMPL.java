@@ -45,7 +45,7 @@ public class CustomerServiceIMPL implements CustomerService {
         CustomerEntity customer = repo.getReferenceById(customerId);
         customer.setName(customerDTO.getName());
         customer.setGender(customerDTO.getGender());
-        customer.setJionDate(customerDTO.getJionDate());
+        customer.setJoinDate(customerDTO.getJoinDate());
         customer.setLevel(customerDTO.getLevel());
         customer.setTotalPoints(customerDTO.getTotalPoints());
         customer.setDob(customerDTO.getDob());

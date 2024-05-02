@@ -9,6 +9,7 @@ import software.ujithamigara.helloShoesSystem.service.OrderService;
 import software.ujithamigara.helloShoesSystem.util.Mapping;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -18,6 +19,7 @@ public class OrderServiceIMPL implements OrderService {
     public final Mapping mapping;
     @Override
     public OrderDTO saveOrder(OrderDTO orderDTO) {
+        orderDTO.setOrderNo(UUID.randomUUID().toString());
         return mapping.toOrderDTO(orderRepo.save(mapping.toOrderEntity(orderDTO)));
     }
 

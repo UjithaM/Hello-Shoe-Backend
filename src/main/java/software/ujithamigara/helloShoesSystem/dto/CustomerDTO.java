@@ -19,7 +19,7 @@ public class CustomerDTO {
     private String customerCode;
     private String name;
     private Gender gender;
-    private Date jionDate;
+    private Date joinDate;
     private Level level;
     private int totalPoints;
     private Date dob;
@@ -31,5 +31,5 @@ public class CustomerDTO {
     private String contactNumber;
     private String email;
     private Timestamp recentPurchaseDate;
-    private List<OrderDTO> orderDTOS;
+    private List<OrderEntity> orderEntities;
 }

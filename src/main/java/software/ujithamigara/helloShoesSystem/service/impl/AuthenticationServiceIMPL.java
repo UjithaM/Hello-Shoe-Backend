@@ -7,22 +7,27 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import software.ujithamigara.helloShoesSystem.dao.EmployeeRepo;
 import software.ujithamigara.helloShoesSystem.dao.UserRepo;
+import software.ujithamigara.helloShoesSystem.dto.EmployeeDTO;
 import software.ujithamigara.helloShoesSystem.dto.UserDTO;
 import software.ujithamigara.helloShoesSystem.entity.enums.Role;
 import software.ujithamigara.helloShoesSystem.reqAndresp.response.JwtAuthResponse;
 import software.ujithamigara.helloShoesSystem.reqAndresp.secure.SignIn;
 import software.ujithamigara.helloShoesSystem.reqAndresp.secure.SignUp;
 import software.ujithamigara.helloShoesSystem.service.AuthenticationService;
+import software.ujithamigara.helloShoesSystem.service.EmployeeService;
 import software.ujithamigara.helloShoesSystem.service.JWTService;
 import software.ujithamigara.helloShoesSystem.util.Mapping;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceIMPL implements AuthenticationService {
     private final UserRepo userRepo;
+    private final EmployeeService employeeService;
     private final JWTService jwtService;
     private final Mapping mapping;
     //utils
@@ -41,17 +46,29 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
 
     @Override
     public JwtAuthResponse signUp(SignUp signUp) {
-        var buildUser = UserDTO.builder()
-                .id(UUID.randomUUID().toString())
-                .email(signUp.getEmail())
-                .firstName(signUp.getFirstName())
-                .lastName(signUp.getLastName())
-                .password(passwordEncoder.encode(signUp.getPassword()))
-                .role(Role.valueOf(signUp.getRole()))
-                .build();
-        var savedUser = userRepo.save(mapping.toUserEntity(buildUser));
-        var genToken = jwtService.generateToken(savedUser);
-        return JwtAuthResponse.builder().token(genToken).build();
+        if (checkEmployeeEmail(signUp)) {
+            var buildUser = UserDTO.builder()
+                    .id(UUID.randomUUID().toString())
+                    .email(signUp.getEmail())
+                    .firstName(signUp.getFirstName())
+                    .lastName(signUp.getLastName())
+                    .password(passwordEncoder.encode(signUp.getPassword()))
+                    .role(Role.valueOf(signUp.getRole()))
+                    .build();
+            var savedUser = userRepo.save(mapping.toUserEntity(buildUser));
+            var genToken = jwtService.generateToken(savedUser);
+            return JwtAuthResponse.builder().token(genToken).build();
+        }
+        return null;
+    }
+    private boolean checkEmployeeEmail(SignUp signUp) {
+        List<EmployeeDTO> emails = employeeService.getAllEmployee();
+        for (EmployeeDTO employee : emails) {
+            if (employee.getEmail().equals(signUp.getEmail())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

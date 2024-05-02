@@ -1,5 +1,9 @@
 package software.ujithamigara.helloShoesSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +26,7 @@ public class CustomerEntity implements SuperEntity {
     private String name;
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    private Date jionDate;
+    private Date joinDate;
     @Enumerated(EnumType.STRING)
     private Level level;
     private int totalPoints;
@@ -38,4 +42,26 @@ public class CustomerEntity implements SuperEntity {
     private Timestamp recentPurchaseDate;
     @OneToMany(mappedBy = "customerEntity")
     private List<OrderEntity> orderEntities;
+
+    @Override
+    public String toString() {
+        return "CustomerEntity{" +
+                "customerCode='" + customerCode + '\'' +
+                ", name='" + name + '\'' +
+                ", gender=" + gender +
+                ", joinDate=" + joinDate +
+                ", level=" + level +
+                ", totalPoints=" + totalPoints +
+                ", dob=" + dob +
+                ", addressNo='" + addressNo + '\'' +
+                ", lane='" + lane + '\'' +
+                ", mainCity='" + mainCity + '\'' +
+                ", mainState='" + mainState + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", recentPurchaseDate=" + recentPurchaseDate +
+                '}';
+    }
+
 }
