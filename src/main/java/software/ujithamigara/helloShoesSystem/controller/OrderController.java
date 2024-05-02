@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import software.ujithamigara.helloShoesSystem.dto.OrderDTO;
 import software.ujithamigara.helloShoesSystem.service.OrderService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/order")
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public Iterable<OrderDTO> getAllOrder() {
+    public List<OrderDTO> getAllOrder() {
         return orderService.getAllOrder();
     }
 

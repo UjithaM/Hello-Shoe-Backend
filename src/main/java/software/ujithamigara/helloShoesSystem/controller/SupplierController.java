@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import software.ujithamigara.helloShoesSystem.dto.SupplierDTO;
 import software.ujithamigara.helloShoesSystem.service.SupplierService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/supplier")
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class SupplierController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public Iterable<SupplierDTO> getAllSupplier() {
+    public List<SupplierDTO> getAllSupplier() {
         return supplierService.getAllSupplier();
     }
 
