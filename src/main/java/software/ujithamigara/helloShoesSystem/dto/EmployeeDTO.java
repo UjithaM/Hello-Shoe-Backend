@@ -34,6 +34,4 @@ public class EmployeeDTO {
     private String email;
     private String guardianName;
     private String guardianContact;
-    private List<OrderDTO> orderEntities;
-    private List<RefundDTO> refundEntities;
 }

@@ -10,6 +10,7 @@ import software.ujithamigara.helloShoesSystem.controller.CustomerController;
 import software.ujithamigara.helloShoesSystem.dto.*;
 import software.ujithamigara.helloShoesSystem.entity.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -79,10 +80,43 @@ public class Mapping {
     }
     //OrderMapping
     public OrderDTO toOrderDTO(OrderEntity orderEntity) {
-        return  mapper.map(orderEntity, OrderDTO.class);
+        CustomerEntity customerEntity = orderEntity.getCustomerEntity();
+        EmployeeEntity employeeEntity = orderEntity.getEmployeeEntity();
+        RefundEntity refundEntity = orderEntity.getRefundEntity();
+        OrderDTO orderDTO = mapper.map(orderEntity, OrderDTO.class);
+        orderDTO.setCustomerDTO(toCustomerDTO(customerEntity));
+        orderDTO.setEmployeeDTO(toEmployeeDTO(employeeEntity));
+        if (refundEntity != null) orderDTO.setRefundDTO(toRefundDTO(refundEntity));
+        return  orderDTO;
     }
     public OrderEntity toOrderEntity(OrderDTO orderDTO) {
+
         return  mapper.map(orderDTO, OrderEntity.class);
+    }
+    public OrderEntity toOrderEntity(OrderDTO orderDTO, List<Order_itemDTO> orderItemDTOS) {
+        OrderEntity orderEntity = mapper.map(orderDTO, OrderEntity.class);
+        orderEntity.setOrderItems(toOrderItemList(orderItemDTOS));
+        CustomerEntity customerEntity = toCustomer(orderDTO.getCustomerDTO());
+        EmployeeEntity employeeEntity = toEmployeeEntity(orderDTO.getEmployeeDTO());
+        RefundEntity refundEntity = toRefundEntity(orderDTO.getRefundDTO());
+        orderEntity.setCustomerEntity(customerEntity);
+        orderEntity.setEmployeeEntity(employeeEntity);
+        orderEntity.setRefundEntity(refundEntity);
+        return  orderEntity;
+    }
+    public List<Order_item> toOrderItemList(List<Order_itemDTO> order_itemDTOS) {
+        List<Order_item> order_items = new ArrayList<>();
+
+        for (Order_itemDTO order_itemDTO : order_itemDTOS) {
+            OrderEntity orderEntity = toOrderEntity(order_itemDTO.getOrderDTO());
+            ItemEntity itemEntity = toItemEntity(order_itemDTO.getItemDTO());
+            Order_item order_item = new Order_item();
+            order_item.setOrders(orderEntity);
+            order_item.setItem(itemEntity);
+            order_item.setQuantity(order_itemDTO.getQuantity());
+            order_items.add(order_item);
+        }
+        return order_items;
     }
     public List<OrderDTO> toOrderDTOList(List<OrderEntity> orderEntities) {
         return mapper.map(orderEntities, List.class);

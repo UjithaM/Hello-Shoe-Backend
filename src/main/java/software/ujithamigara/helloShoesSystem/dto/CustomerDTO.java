@@ -1,6 +1,5 @@
 package software.ujithamigara.helloShoesSystem.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,5 +30,4 @@ public class CustomerDTO {
     private String contactNumber;
     private String email;
     private Timestamp recentPurchaseDate;
-    private List<OrderEntity> orderEntities;
 }

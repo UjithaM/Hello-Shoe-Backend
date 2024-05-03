@@ -19,7 +19,7 @@ public class OrderDTO {
     private double totalPrice;
     private int itemQuantity;
     private List<Order_itemDTO> orderItemDTOS;
-    private CustomerEntity customerEntity;
-    private EmployeeEntity employeeEntity;
-    private RefundEntity refundDTOEntity;
+    private CustomerDTO customerDTO;
+    private EmployeeDTO EmployeeDTO;
+    private RefundDTO RefundDTO;
 }

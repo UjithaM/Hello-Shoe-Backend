@@ -43,25 +43,5 @@ public class CustomerEntity implements SuperEntity {
     @OneToMany(mappedBy = "customerEntity")
     private List<OrderEntity> orderEntities;
 
-    @Override
-    public String toString() {
-        return "CustomerEntity{" +
-                "customerCode='" + customerCode + '\'' +
-                ", name='" + name + '\'' +
-                ", gender=" + gender +
-                ", joinDate=" + joinDate +
-                ", level=" + level +
-                ", totalPoints=" + totalPoints +
-                ", dob=" + dob +
-                ", addressNo='" + addressNo + '\'' +
-                ", lane='" + lane + '\'' +
-                ", mainCity='" + mainCity + '\'' +
-                ", mainState='" + mainState + '\'' +
-                ", postalCode='" + postalCode + '\'' +
-                ", contactNumber='" + contactNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", recentPurchaseDate=" + recentPurchaseDate +
-                '}';
-    }
 
 }

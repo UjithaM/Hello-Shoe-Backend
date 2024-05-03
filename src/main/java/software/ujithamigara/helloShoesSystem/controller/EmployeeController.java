@@ -12,7 +12,7 @@ import software.ujithamigara.helloShoesSystem.service.EmployeeService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/Employees")
+@RequestMapping("/api/v1/employee")
 @RequiredArgsConstructor
 public class EmployeeController {
     private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);

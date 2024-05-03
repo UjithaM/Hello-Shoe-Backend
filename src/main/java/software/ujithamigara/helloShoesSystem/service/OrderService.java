@@ -1,7 +1,6 @@
 package software.ujithamigara.helloShoesSystem.service;
 
 import software.ujithamigara.helloShoesSystem.dto.OrderDTO;
-import software.ujithamigara.helloShoesSystem.dto.SupplierDTO;
 
 import java.util.List;
 
