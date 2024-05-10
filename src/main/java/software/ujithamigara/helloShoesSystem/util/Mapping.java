@@ -1,12 +1,8 @@
 package software.ujithamigara.helloShoesSystem.util;
 
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import software.ujithamigara.helloShoesSystem.controller.CustomerController;
 import software.ujithamigara.helloShoesSystem.dto.*;
 import software.ujithamigara.helloShoesSystem.entity.*;
 
@@ -130,5 +126,15 @@ public class Mapping {
     }
     public List<RefundDTO> toRefundDTOList(List<RefundEntity> refundEntities) {
         return mapper.map(refundEntities, List.class);
+    }
+    //AccessoriesMapping
+    public AccessoriesDTO toAccessoriesDTO(AccessoriesEntity accessoriesEntity) {
+        return  mapper.map(accessoriesEntity, AccessoriesDTO.class);
+    }
+    public AccessoriesEntity toAccessoriesEntity(AccessoriesDTO accessoriesDTO) {
+        return  mapper.map(accessoriesDTO, AccessoriesEntity.class);
+    }
+    public List<AccessoriesDTO> toAccessoriesDTOList(List<AccessoriesEntity> accessoriesEntities) {
+        return mapper.map(accessoriesEntities, List.class);
     }
 }

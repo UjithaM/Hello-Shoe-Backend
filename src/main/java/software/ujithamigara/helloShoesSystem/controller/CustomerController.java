@@ -3,8 +3,12 @@ package software.ujithamigara.helloShoesSystem.controller;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import software.ujithamigara.helloShoesSystem.dto.CustomerDTO;
 import software.ujithamigara.helloShoesSystem.service.CustomerService;
@@ -25,10 +29,20 @@ public class CustomerController {
         return "Customer Health Test";
     }
 
-    @PostMapping
-    public CustomerDTO saveCustomer(@RequestBody CustomerDTO customer) {
-        logger.info("Saving customer: {}", customer);
-        return customerService.saveCustomer(customer);
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> saveCustomer(@Validated @RequestBody CustomerDTO customerDTO, BindingResult bindingResult){
+        logger.info("Saving customer details");
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldErrors().get(0).getDefaultMessage());
+        }
+        try {
+            customerService.saveCustomer(customerDTO);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Customer Details saved Successfully.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Customer saved Unsuccessfully.\nMore Details\n"+exception);
+        }
     }
 
     @GetMapping

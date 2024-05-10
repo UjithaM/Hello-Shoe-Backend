@@ -4,26 +4,21 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
+import software.ujithamigara.helloShoesSystem.entity.SupplierEntity;
+import software.ujithamigara.helloShoesSystem.entity.enums.AccessoriesVerities;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ItemDTO {
-    @Null(message = "Item id generate by the programme")
-    private String itemCode;
+public class AccessoriesDTO {
+    @Null(message = "Accessories id generate by the programme")
+    private String accessoriesCode;
 
-    @NotBlank(message = "Item description cannot be blank")
-    private String itemDescription;
+    @NotBlank(message = "Accessories description cannot be blank")
+    private String accessoriesDescription;
 
-    private String itemPicture;
-
-    @NotBlank(message = "Item category cannot be blank")
-    private String itemCategory;
-
-    @Min(value = 1, message = "Size must be greater than 0")
-    private int size;
+    @NotBlank(message = "Accessories picture cannot be blank")
+    private String accessoriesPicture;
 
     @Positive(message = "Unit price sell must be positive")
     private double unitPriceSell;
@@ -40,9 +35,9 @@ public class ItemDTO {
     @Min(value = 0, message = "Quantity must be zero or greater")
     private int quantity;
 
-    @NotBlank(message = "Item status cannot be blank")
-    private String itemStatus;
+    @NotNull(message = "Accessories verities cannot be null")
+    private AccessoriesVerities accessoriesVerities;
 
-    @NotNull(message = "Supplier cannot be null")
-    private SupplierDTO supplierDTO;
+    @NotNull(message = "Supplier entity cannot be null")
+    private SupplierEntity supplierEntity;
 }

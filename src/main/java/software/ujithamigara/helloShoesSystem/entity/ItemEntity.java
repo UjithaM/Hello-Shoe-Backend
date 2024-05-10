@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import software.ujithamigara.helloShoesSystem.entity.enums.Occasion;
+import software.ujithamigara.helloShoesSystem.entity.enums.Verities;
 
 import java.util.List;
 
@@ -25,6 +27,10 @@ public class ItemEntity implements SuperEntity{
     private double profitMargin;
     private int quantity;
     private String itemStatus;
+    @Enumerated(EnumType.STRING)
+    private Occasion occasion;
+    @Enumerated(EnumType.STRING)
+    private Verities verities;
     @ManyToOne
     @JoinColumn(name = "supplierCode", referencedColumnName = "supplierCode")
     @JoinColumn(name = "name", referencedColumnName = "name")
