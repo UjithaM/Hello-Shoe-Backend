@@ -27,12 +27,12 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Override
     public void deleteCustomer(String customerId) {
-        repo.delete(repo.getReferenceById(customerId));
+        repo.delete(repo.findById(customerId).get());
     }
 
     @Override
     public CustomerDTO getSelectedCustomer(String customerId) {
-        return mapping.toCustomerDTO(repo.getReferenceById(customerId));
+        return mapping.toCustomerDTO(repo.findById(customerId).get());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Override
     public void updateCustomer(String customerId, CustomerDTO customerDTO) {
-        CustomerEntity customer = repo.getReferenceById(customerId);
+        CustomerEntity customer = repo.findById(customerId).get();
         customer.setName(customerDTO.getName());
         customer.setGender(customerDTO.getGender());
         customer.setJoinDate(customerDTO.getJoinDate());

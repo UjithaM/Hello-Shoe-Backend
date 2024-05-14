@@ -30,7 +30,7 @@ public class OrderServiceIMPL implements OrderService {
 
     @Override
     public OrderDTO getSelectedOrder(String orderCode) {
-        return mapping.toOrderDTO(orderRepo.getReferenceById(orderCode));
+        return mapping.toOrderDTO(orderRepo.findById(orderCode).get());
     }
 
     @Override

@@ -29,7 +29,7 @@ public class RefundServicesIMPL implements RefundServices {
 
     @Override
     public RefundDTO getSelectedRefund(String id) {
-        return mapping.toRefundDTO(refundRepo.getReferenceById(id));
+        return mapping.toRefundDTO(refundRepo.findById(id).get());
     }
 
     @Override

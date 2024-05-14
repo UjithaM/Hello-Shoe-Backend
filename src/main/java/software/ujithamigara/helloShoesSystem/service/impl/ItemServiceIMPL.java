@@ -25,12 +25,12 @@ public class ItemServiceIMPL implements ItemService {
 
     @Override
     public void deleteItem(String itemId) {
-        repo.delete(repo.getReferenceById(itemId));
+        repo.delete(repo.findById(itemId).get());
     }
 
     @Override
     public ItemDTO getSelectedItem(String itemId) {
-        return mapping.toItemDTO(repo.getReferenceById(itemId));
+        return mapping.toItemDTO(repo.findById(itemId).get());
     }
 
     @Override

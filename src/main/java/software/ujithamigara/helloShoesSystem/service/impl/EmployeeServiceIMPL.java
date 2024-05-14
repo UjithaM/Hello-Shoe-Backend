@@ -25,12 +25,12 @@ public class EmployeeServiceIMPL implements EmployeeService {
 
     @Override
     public void deleteEmployee(String employeeId) {
-        repo.delete(repo.getReferenceById(employeeId));
+        repo.delete(repo.findById(employeeId).get());
     }
 
     @Override
     public EmployeeDTO getSelectedEmployee(String employeeId) {
-        return mapping.toEmployeeDTO(repo.getReferenceById(employeeId));
+        return mapping.toEmployeeDTO(repo.findById(employeeId).get());
     }
 
     @Override
