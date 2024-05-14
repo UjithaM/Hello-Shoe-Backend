@@ -1,13 +1,10 @@
 package software.ujithamigara.helloShoesSystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import software.ujithamigara.helloShoesSystem.entity.enums.Gender;
 import software.ujithamigara.helloShoesSystem.entity.enums.Level;
 
@@ -40,6 +37,7 @@ public class CustomerEntity implements SuperEntity {
     @Column(unique = true)
     private String email;
     private Timestamp recentPurchaseDate;
+    @ToString.Exclude
     @OneToMany(mappedBy = "customerEntity")
     private List<OrderEntity> orderEntities;
 
