@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api/v1/accessories")
 @RequiredArgsConstructor
 public class AccessoriesController {
-    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AccessoriesController.class);
 
     private final AccessoriesService accessoriesService;
 
@@ -36,8 +36,8 @@ public class AccessoriesController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldErrors().get(0).getDefaultMessage());
         }
         try {
-            accessoriesService.saveAccessories(accessoriesDTO);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Accessories Details saved Successfully.");
+            AccessoriesDTO savedAccessories = accessoriesService.saveAccessories(accessoriesDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedAccessories );
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
                     body("Internal server error | Accessories saved Unsuccessfully.\nMore Details\n"+exception);
