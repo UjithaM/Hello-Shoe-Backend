@@ -38,6 +38,9 @@ public class AccessoriesDTO {
     @NotNull(message = "Accessories verities cannot be null")
     private AccessoriesVerities accessoriesVerities;
 
-    @NotNull(message = "Supplier entity cannot be null")
-    private SupplierEntity supplierEntity;
+    @NotNull(message = "Supplier supplierCode cannot be null")
+    private String supplierCode;
+
+    @NotNull(message = "Supplier name cannot be null")
+    private String supplierName;
 }
