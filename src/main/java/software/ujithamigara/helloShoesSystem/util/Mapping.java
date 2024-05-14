@@ -8,6 +8,7 @@ import software.ujithamigara.helloShoesSystem.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class Mapping {
@@ -23,7 +24,9 @@ public class Mapping {
         return  mapper.map(customerDTO, CustomerEntity.class);
     }
     public List<CustomerDTO> toCustomerDTOList(List<CustomerEntity> customers) {
-        return mapper.map(customers, List.class);
+        return customers.stream()
+                .map(customer -> mapper.map(customer, CustomerDTO.class))
+                .collect(Collectors.toList());
     }
     //UserMapping
     public UserEntity toUserEntity(UserDTO userDTO) {
@@ -41,7 +44,9 @@ public class Mapping {
         return  mapper.map(supplierDTO, SupplierEntity.class);
     }
     public List<SupplierDTO> toSupplierDTOList(List<SupplierEntity> supplierEntities) {
-        return mapper.map(supplierEntities, List.class);
+        return supplierEntities.stream()
+                .map(supplierEntity -> mapper.map(supplierEntity, SupplierDTO.class))
+                .collect(Collectors.toList());
     }
 
     //EmployeeMapping
@@ -52,7 +57,9 @@ public class Mapping {
         return  mapper.map(employeeDTO, EmployeeEntity.class);
     }
     public List<EmployeeDTO> toEmployeeDTOList(List<EmployeeEntity> employeeEntities) {
-        return mapper.map(employeeEntities, List.class);
+        return employeeEntities.stream()
+                .map(employeeEntity -> mapper.map(employeeEntity, EmployeeDTO.class))
+                .collect(Collectors.toList());
     }
     //ItemMapping
     public ItemDTO toItemDTO(ItemEntity itemEntity) {
@@ -62,7 +69,9 @@ public class Mapping {
         return  mapper.map(itemDTO, ItemEntity.class);
     }
     public List<ItemDTO> toItemDTOList(List<ItemEntity> itemEntities) {
-        return mapper.map(itemEntities, List.class);
+        return itemEntities.stream()
+                .map(itemEntity -> mapper.map(itemEntity, ItemDTO.class))
+                .collect(Collectors.toList());
     }
     //OrderItemMapping
     public Order_itemDTO toOrderItemDTO(Order_item order_item) {
@@ -72,33 +81,20 @@ public class Mapping {
         return  mapper.map(order_itemDTO, Order_item.class);
     }
     public List<Order_itemDTO> toOrderItemDTOList(List<Order_item> order_items) {
-        return mapper.map(order_items, List.class);
+        return order_items.stream()
+                .map(order_item -> mapper.map(order_item, Order_itemDTO.class))
+                .collect(Collectors.toList());
     }
     //OrderMapping
     public OrderDTO toOrderDTO(OrderEntity orderEntity) {
-        CustomerEntity customerEntity = orderEntity.getCustomerEntity();
-        EmployeeEntity employeeEntity = orderEntity.getEmployeeEntity();
-        RefundEntity refundEntity = orderEntity.getRefundEntity();
-        OrderDTO orderDTO = mapper.map(orderEntity, OrderDTO.class);
-        orderDTO.setCustomerDTO(toCustomerDTO(customerEntity));
-        orderDTO.setEmployeeDTO(toEmployeeDTO(employeeEntity));
-        if (refundEntity != null) orderDTO.setRefundDTO(toRefundDTO(refundEntity));
-        return  orderDTO;
+        return  mapper.map(orderEntity, OrderDTO.class);
     }
     public OrderEntity toOrderEntity(OrderDTO orderDTO) {
 
         return  mapper.map(orderDTO, OrderEntity.class);
     }
     public OrderEntity toOrderEntity(OrderDTO orderDTO, List<Order_itemDTO> orderItemDTOS) {
-        OrderEntity orderEntity = mapper.map(orderDTO, OrderEntity.class);
-        orderEntity.setOrderItems(toOrderItemList(orderItemDTOS));
-        CustomerEntity customerEntity = toCustomer(orderDTO.getCustomerDTO());
-        EmployeeEntity employeeEntity = toEmployeeEntity(orderDTO.getEmployeeDTO());
-        RefundEntity refundEntity = toRefundEntity(orderDTO.getRefundDTO());
-        orderEntity.setCustomerEntity(customerEntity);
-        orderEntity.setEmployeeEntity(employeeEntity);
-        orderEntity.setRefundEntity(refundEntity);
-        return  orderEntity;
+        return mapper.map(orderDTO, OrderEntity.class);
     }
     public List<Order_item> toOrderItemList(List<Order_itemDTO> order_itemDTOS) {
         List<Order_item> order_items = new ArrayList<>();
@@ -115,7 +111,9 @@ public class Mapping {
         return order_items;
     }
     public List<OrderDTO> toOrderDTOList(List<OrderEntity> orderEntities) {
-        return mapper.map(orderEntities, List.class);
+        return orderEntities.stream()
+                .map(orderEntity -> mapper.map(orderEntity, OrderDTO.class))
+                .collect(Collectors.toList());
     }
     //RefundMapping
     public RefundDTO toRefundDTO(RefundEntity refundEntity) {
@@ -125,7 +123,9 @@ public class Mapping {
         return  mapper.map(refundDTO, RefundEntity.class);
     }
     public List<RefundDTO> toRefundDTOList(List<RefundEntity> refundEntities) {
-        return mapper.map(refundEntities, List.class);
+        return refundEntities.stream()
+                .map(refundEntity -> mapper.map(refundEntity, RefundDTO.class))
+                .collect(Collectors.toList());
     }
     //AccessoriesMapping
     public AccessoriesDTO toAccessoriesDTO(AccessoriesEntity accessoriesEntity) {
@@ -135,6 +135,8 @@ public class Mapping {
         return  mapper.map(accessoriesDTO, AccessoriesEntity.class);
     }
     public List<AccessoriesDTO> toAccessoriesDTOList(List<AccessoriesEntity> accessoriesEntities) {
-        return mapper.map(accessoriesEntities, List.class);
+        return accessoriesEntities.stream()
+                .map(accessoriesEntity -> mapper.map(accessoriesEntity, AccessoriesDTO.class))
+                .collect(Collectors.toList());
     }
 }
