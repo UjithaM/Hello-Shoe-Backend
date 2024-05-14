@@ -27,12 +27,12 @@ public class SupplierServiceIMPL implements SupplierService {
 
     @Override
     public void deleteSupplier(String supplierCode) {
-        repo.delete(repo.getReferenceById(supplierCode));
+        repo.delete(repo.findById(supplierCode).get());
     }
 
     @Override
     public SupplierDTO getSelectedSupplier(String supplierCode) {
-        return mapping.toSupplierDTO(repo.getReferenceById(supplierCode));
+        return mapping.toSupplierDTO(repo.findById(supplierCode).get());
     }
 
     @Override
