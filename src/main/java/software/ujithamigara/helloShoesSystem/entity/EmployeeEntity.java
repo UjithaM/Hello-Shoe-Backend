@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import software.ujithamigara.helloShoesSystem.entity.enums.Gender;
 import software.ujithamigara.helloShoesSystem.entity.enums.Role;
 
@@ -39,9 +40,11 @@ public class EmployeeEntity implements SuperEntity{
     private String email;
     private String guardianName;
     private String guardianContact;
+    @ToString.Exclude
     @OneToMany(mappedBy = "employeeEntity")
     private List<OrderEntity> orderEntities;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "employeeEntity")
     private List<RefundEntity> refundEntities;
 }
