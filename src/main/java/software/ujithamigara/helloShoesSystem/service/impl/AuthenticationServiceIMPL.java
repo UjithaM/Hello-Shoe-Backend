@@ -2,11 +2,14 @@ package software.ujithamigara.helloShoesSystem.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import software.ujithamigara.helloShoesSystem.controller.CustomerController;
 import software.ujithamigara.helloShoesSystem.dao.EmployeeRepo;
 import software.ujithamigara.helloShoesSystem.dao.UserRepo;
 import software.ujithamigara.helloShoesSystem.dto.EmployeeDTO;
@@ -33,6 +36,7 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
     //utils
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     @Override
     public JwtAuthResponse signIn(SignIn signIn) {
@@ -62,6 +66,7 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
         return null;
     }
     private boolean checkEmployeeEmail(SignUp signUp) {
+        logger.info("Checking if email is already in use");
         List<EmployeeDTO> emails = employeeService.getAllEmployee();
         for (EmployeeDTO employee : emails) {
             if (employee.getEmail().equals(signUp.getEmail())) {
@@ -73,6 +78,7 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
 
     @Override
     public JwtAuthResponse refreshToken(String accessToken) {
+        logger.info("Received refresh token request");
         var userName = jwtService.extractUsername(accessToken);
         var userEntity = userRepo.findByEmail(userName).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         var refreshToken = jwtService.generateToken(userEntity);
