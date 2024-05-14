@@ -29,12 +29,12 @@ public class OrderDTO {
     @NotEmpty(message = "Order item list cannot be empty")
     private List<Order_itemDTO> orderItemDTOS;
 
-    @NotNull(message = "Customer cannot be null")
-    private CustomerDTO customerDTO;
+    @NotNull(message = "customerCode cannot be null")
+    private String customerCode;
 
-    @NotNull(message = "Employee cannot be null")
-    private EmployeeDTO EmployeeDTO;
+    @NotNull(message = "employeeCode cannot be null")
+    private String employeeCode;
 
-    @NotNull(message = "Refund cannot be null")
-    private RefundDTO RefundDTO;
+    @NotNull(message = "refundCode cannot be null")
+    private String refundCode;
 }

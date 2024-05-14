@@ -43,6 +43,6 @@ public class ItemDTO {
     @NotBlank(message = "Item status cannot be blank")
     private String itemStatus;
 
-    @NotNull(message = "Supplier cannot be null")
-    private SupplierDTO supplierDTO;
+    @NotNull(message = "supplierCode cannot be null")
+    private String supplierCode;
 }

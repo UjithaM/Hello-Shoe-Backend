@@ -22,9 +22,9 @@ public class RefundDTO {
     @NotNull(message = "Refund date cannot be null")
     private Date refundDate;
 
-    @NotNull(message = "Order cannot be null")
-    private OrderEntity order;
+    @NotNull(message = "orderId cannot be null")
+    private String orderId;
 
-    @NotNull(message = "Employee cannot be null")
-    private EmployeeDTO employeeDTO;
+    @NotNull(message = "EmployeeCode cannot be null")
+    private String employeeCode;
 }
