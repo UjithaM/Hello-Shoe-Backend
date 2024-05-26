@@ -37,8 +37,8 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldErrors().get(0).getDefaultMessage());
         }
         try {
-            customerService.saveCustomer(customerDTO);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Customer Details saved Successfully.");
+            CustomerDTO savedCustomer = customerService.saveCustomer(customerDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedCustomer);
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
                     body("Internal server error | Customer saved Unsuccessfully.\nMore Details\n"+exception);
