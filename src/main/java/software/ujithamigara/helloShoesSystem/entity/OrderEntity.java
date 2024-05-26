@@ -18,7 +18,6 @@ public class OrderEntity implements SuperEntity{
     private String purchaseDate;
     private String paymentMethod;
     private double totalPrice;
-    private int itemQuantity;
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<Order_item> orderItems;
     @ManyToOne

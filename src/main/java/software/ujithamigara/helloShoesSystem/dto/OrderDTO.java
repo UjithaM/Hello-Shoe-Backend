@@ -23,8 +23,6 @@ public class OrderDTO {
     @PositiveOrZero(message = "Total price must be positive or zero")
     private double totalPrice;
 
-    @Min(value = 1, message = "Item quantity must be greater than 0")
-    private int itemQuantity;
 
     @NotEmpty(message = "Order item list cannot be empty")
     private List<Order_itemDTO> orderItemDTOS;
