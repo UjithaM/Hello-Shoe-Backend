@@ -19,9 +19,14 @@ public class UserController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public ResponseEntity<JwtAuthResponse> signUp(@RequestBody SignUp signUpReq) {
+    public ResponseEntity<?> signUp(@RequestBody SignUp signUpReq) {
         logger.info("Received sign-up request for user: {}", signUpReq.getEmail());
-        return ResponseEntity.ok(authenticationService.signUp(signUpReq));
+        JwtAuthResponse jwtAuthResponse = authenticationService.signUp(signUpReq);
+        if (jwtAuthResponse == null) {
+            return ResponseEntity.badRequest().body("Email is already in use. Please use a different email.");
+        } else {
+            return ResponseEntity.ok(jwtAuthResponse);
+        }
     }
 
     @PostMapping("/signin")
