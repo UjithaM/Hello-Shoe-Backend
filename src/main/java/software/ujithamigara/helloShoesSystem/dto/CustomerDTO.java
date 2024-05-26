@@ -14,7 +14,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class CustomerDTO {
-    @Null(message = "Customer id generate by the programme")
     private String customerCode;
     @NotBlank(message = "customer name cannot be blank")
     @Size(min = 2, max = 100, message = "Customer name must be between 2 and 100 characters")
@@ -24,6 +23,7 @@ public class CustomerDTO {
     @NotNull(message = "Joined date cannot be a null")
     @PastOrPresent(message = "Join date must be in the past or present")
     private Date joinDate;
+    @NotNull(message = "Level cannot be null")
     private Level level;
     @PositiveOrZero(message = "Total points must be positive or zero")
     private int totalPoints;
@@ -46,6 +46,6 @@ public class CustomerDTO {
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Invalid email format")
     private String email;
-    @NotNull(message = "Recent purchased date cannot be null")
+
     private Timestamp recentPurchaseDate;
 }
