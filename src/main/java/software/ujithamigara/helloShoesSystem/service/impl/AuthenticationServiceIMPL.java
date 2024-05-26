@@ -9,8 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import software.ujithamigara.helloShoesSystem.controller.CustomerController;
-import software.ujithamigara.helloShoesSystem.dao.EmployeeRepo;
 import software.ujithamigara.helloShoesSystem.dao.UserRepo;
 import software.ujithamigara.helloShoesSystem.dto.EmployeeDTO;
 import software.ujithamigara.helloShoesSystem.dto.UserDTO;
@@ -36,7 +34,7 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
     //utils
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationServiceIMPL.class);
 
     @Override
     public JwtAuthResponse signIn(SignIn signIn) {
@@ -50,7 +48,7 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
 
     @Override
     public JwtAuthResponse signUp(SignUp signUp) {
-        if (checkEmployeeEmail(signUp)) {
+        if (checkEmployeeEmailAndUserEmail(signUp)) {
             var buildUser = UserDTO.builder()
                     .id(UUID.randomUUID().toString())
                     .email(signUp.getEmail())
@@ -65,15 +63,21 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
         }
         return null;
     }
-    private boolean checkEmployeeEmail(SignUp signUp) {
+    private boolean checkEmployeeEmailAndUserEmail(SignUp signUp) {
         logger.info("Checking if email is already in use");
         List<EmployeeDTO> emails = employeeService.getAllEmployee();
+        List<UserDTO> users = mapping.toUserDTOList(userRepo.findAll());
         for (EmployeeDTO employee : emails) {
             if (employee.getEmail().equals(signUp.getEmail())) {
-                return true;
+                return false;
             }
         }
-        return false;
+        for (UserDTO user : users) {
+            if (user.getEmail().equals(signUp.getEmail())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
