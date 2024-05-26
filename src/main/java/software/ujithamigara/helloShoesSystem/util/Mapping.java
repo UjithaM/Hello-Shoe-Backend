@@ -35,6 +35,11 @@ public class Mapping {
     public void toUserDTO(UserEntity userEntity) {
         mapper.map(userEntity, UserDTO.class);
     }
+    public List<UserDTO> toUserDTOList(List<UserEntity> userEntities) {
+        return userEntities.stream()
+                .map(userEntity -> mapper.map(userEntity, UserDTO.class))
+                .collect(Collectors.toList());
+    }
 
     //SupplierMapping
     public SupplierDTO toSupplierDTO(SupplierEntity supplierEntity) {
