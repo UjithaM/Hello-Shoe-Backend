@@ -20,8 +20,12 @@ public class CustomerServiceIMPL implements CustomerService {
     private final Mapping mapping;
 
     @Override
-    public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
-        customerDTO.setCustomerCode(UUID.randomUUID().toString());
+    public CustomerDTO saveCustomer(CustomerDTO customerDTO)   {
+        long customerCount = repo.count();
+
+        String customerCode = String.format("C%04d", customerCount + 1);
+
+        customerDTO.setCustomerCode(customerCode);
         return mapping.toCustomerDTO(repo.save(mapping.toCustomer(customerDTO)));
     }
 
