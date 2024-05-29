@@ -4,6 +4,8 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import software.ujithamigara.helloShoesSystem.entity.OrderAccessories;
+import software.ujithamigara.helloShoesSystem.entity.Order_item;
 
 import java.util.Date;
 import java.util.List;
@@ -24,8 +26,9 @@ public class OrderDTO {
     private double totalPrice;
 
 
-    @NotEmpty(message = "Order item list cannot be empty")
-    private List<Order_itemDTO> orderItemDTOS;
+    private List<Order_item> orderItems;
+
+    private List<OrderAccessories> orderAccessories;
 
     @NotNull(message = "customerCode cannot be null")
     private String customerCode;
