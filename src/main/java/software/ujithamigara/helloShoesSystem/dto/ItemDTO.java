@@ -4,6 +4,11 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import software.ujithamigara.helloShoesSystem.entity.SupplierEntity;
+import software.ujithamigara.helloShoesSystem.entity.Order_item;
+import software.ujithamigara.helloShoesSystem.entity.enums.Gender;
+import software.ujithamigara.helloShoesSystem.entity.enums.Occasion;
+import software.ujithamigara.helloShoesSystem.entity.enums.Verities;
 
 import java.util.List;
 
@@ -21,7 +26,7 @@ public class ItemDTO {
     @NotBlank(message = "Item category cannot be blank")
     private String itemCategory;
 
-    @Min(value = 1, message = "Size must be greater than 0")
+    @Positive(message = "Size must be positive")
     private int size;
 
     @Positive(message = "Unit price sell must be positive")
@@ -36,12 +41,23 @@ public class ItemDTO {
     @PositiveOrZero(message = "Profit margin must be positive or zero")
     private double profitMargin;
 
-    @Min(value = 0, message = "Quantity must be zero or greater")
+    @PositiveOrZero(message = "Quantity must be positive or zero")
     private int quantity;
 
     @NotBlank(message = "Item status cannot be blank")
     private String itemStatus;
 
-    @NotNull(message = "supplierCode cannot be null")
+    @NotNull(message = "Occasion cannot be null")
+    private Occasion occasion;
+
+    @NotNull(message = "Verities cannot be null")
+    private Verities verities;
+
+    @NotNull(message = "Gender cannot be null")
+    private Gender gender;
+
+    @NotNull(message = "Supplier entity cannot be null")
     private String supplierCode;
+
+    private List<Order_item> orderItems;
 }
