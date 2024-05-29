@@ -16,11 +16,12 @@ import software.ujithamigara.helloShoesSystem.util.Mapping;
 public class UserServiceIMPL implements UserService {
     private final UserRepo userRepo;
     private final Mapping map;
+
     @Override
     public UserDetailsService userDetailsService() {
         return username ->
                 userRepo.findByEmail(username)
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
     }
 
     @Override
