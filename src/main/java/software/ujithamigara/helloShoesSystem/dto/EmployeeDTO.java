@@ -28,7 +28,7 @@ public class EmployeeDTO {
     private String civilStatus;
 
     @NotBlank(message = "Designation cannot be blank")
-    private String Designation;
+    private String designation;
 
     @NotNull(message = "Role cannot be null")
     private Role role;
