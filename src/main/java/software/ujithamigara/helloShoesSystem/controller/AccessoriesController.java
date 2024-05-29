@@ -24,48 +24,80 @@ public class AccessoriesController {
     private final AccessoriesService accessoriesService;
 
     @GetMapping("/health")
-    public String healthTest(){
+    public String healthTest() {
         return "Accessories Health Test";
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> saveAccessories(@Validated @RequestBody AccessoriesDTO accessoriesDTO, BindingResult bindingResult){
-        logger.info("Saving accessories details");
+    public ResponseEntity<?> saveAccessories(@Validated @RequestBody AccessoriesDTO accessoriesDTO, BindingResult bindingResult) {
+        logger.info("Saving accessories details: {}", accessoriesDTO);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldErrors().get(0).getDefaultMessage());
         }
         try {
             AccessoriesDTO savedAccessories = accessoriesService.saveAccessories(accessoriesDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedAccessories );
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedAccessories);
         } catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
-                    body("Internal server error | Accessories saved Unsuccessfully.\nMore Details\n"+exception);
+            logger.error("Error saving accessories: ", exception);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal server error | Accessories saved Unsuccessfully.\nMore Details\n" + exception);
         }
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public List<AccessoriesDTO> getAllAccessories() {
+    public ResponseEntity<?> getAllAccessories() {
         logger.info("Fetching all accessories");
-        return accessoriesService.getAllAccessories();
+        try {
+            List<AccessoriesDTO> accessoriesList = accessoriesService.getAllAccessories();
+            return ResponseEntity.ok(accessoriesList);
+        } catch (Exception exception) {
+            logger.error("Error fetching all accessories: ", exception);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal server error | Unable to fetch accessories.\nMore Details\n" + exception);
+        }
     }
 
     @GetMapping("/{id}")
-    public AccessoriesDTO getAccessoriesById(@PathVariable String id) {
+    public ResponseEntity<?> getAccessoriesById(@PathVariable String id) {
         logger.info("Fetching accessories with ID: {}", id);
-        return accessoriesService.getSelectedAccessories(id);
+        try {
+            AccessoriesDTO accessories = accessoriesService.getSelectedAccessories(id);
+            return ResponseEntity.ok(accessories);
+        } catch (Exception exception) {
+            logger.error("Error fetching accessories by ID: ", exception);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal server error | Unable to fetch accessories.\nMore Details\n" + exception);
+        }
     }
 
     @PutMapping("/{id}")
-    public void updateAccessories(@PathVariable String id, @RequestBody AccessoriesDTO accessoriesDTO) {
+    public ResponseEntity<?> updateAccessories(@PathVariable String id, @Validated @RequestBody AccessoriesDTO accessoriesDTO, BindingResult bindingResult) {
         logger.info("Updating accessories with ID: {}", id);
-        accessoriesService.updateAccessories(id, accessoriesDTO);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldErrors().get(0).getDefaultMessage());
+        }
+        try {
+            accessoriesService.updateAccessories(id, accessoriesDTO);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception exception) {
+            logger.error("Error updating accessories: ", exception);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal server error | Accessories update unsuccessful.\nMore Details\n" + exception);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAccessories(@PathVariable String id) {
+    public ResponseEntity<?> deleteAccessories(@PathVariable String id) {
         logger.info("Deleting accessories with ID: {}", id);
-        accessoriesService.deleteAccessories(id);
+        try {
+            accessoriesService.deleteAccessories(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception exception) {
+            logger.error("Error deleting accessories: ", exception);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal server error | Unable to delete accessories.\nMore Details\n" + exception);
+        }
     }
 }
