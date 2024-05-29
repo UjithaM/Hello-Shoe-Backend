@@ -12,7 +12,6 @@ import software.ujithamigara.helloShoesSystem.entity.enums.Role;
 @Data
 @Builder
 public class UserDTO {
-    @Null(message = "User id generate by the programme")
     private String id;
 
     @NotBlank(message = "First name cannot be blank")

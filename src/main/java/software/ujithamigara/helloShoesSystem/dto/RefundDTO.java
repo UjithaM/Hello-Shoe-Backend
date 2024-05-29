@@ -12,7 +12,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class RefundDTO {
-    @Null(message = "Refund id generate by the programme")
     private String refundId;
 
     @NotBlank(message = "Refund reason cannot be blank")

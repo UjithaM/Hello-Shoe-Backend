@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class OrderDTO {
-    @Null(message = "Order id generate by the programme")
     private String orderNo;
 
     @NotBlank(message = "Purchase date cannot be blank")

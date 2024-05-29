@@ -4,14 +4,12 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import software.ujithamigara.helloShoesSystem.entity.SupplierEntity;
 import software.ujithamigara.helloShoesSystem.entity.enums.AccessoriesVerities;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class AccessoriesDTO {
-    @Null(message = "Accessories id generate by the programme")
     private String accessoriesCode;
 
     @NotBlank(message = "Accessories description cannot be blank")

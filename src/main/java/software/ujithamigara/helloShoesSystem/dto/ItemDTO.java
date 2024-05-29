@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class ItemDTO {
-    @Null(message = "Item id generate by the programme")
     private String itemCode;
 
     @NotBlank(message = "Item description cannot be blank")

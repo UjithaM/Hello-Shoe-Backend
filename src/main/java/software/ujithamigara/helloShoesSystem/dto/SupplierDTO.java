@@ -10,7 +10,6 @@ import software.ujithamigara.helloShoesSystem.entity.enums.Category;
 @NoArgsConstructor
 @Data
 public class SupplierDTO {
-   @Null(message = "Supplier id generate by the programme")
     private String supplierCode;
 
     @NotBlank(message = "Name cannot be blank")

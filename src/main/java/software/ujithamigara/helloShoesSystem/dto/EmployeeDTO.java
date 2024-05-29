@@ -13,7 +13,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class EmployeeDTO {
-    @Null(message = "Employee id generate by the programme")
     private String employeeCode;
 
     @NotBlank(message = "Name cannot be blank")
