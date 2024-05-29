@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import software.ujithamigara.helloShoesSystem.entity.enums.Gender;
 import software.ujithamigara.helloShoesSystem.entity.enums.Occasion;
 import software.ujithamigara.helloShoesSystem.entity.enums.Verities;
 
@@ -31,6 +32,8 @@ public class ItemEntity implements SuperEntity{
     private Occasion occasion;
     @Enumerated(EnumType.STRING)
     private Verities verities;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     @ManyToOne
     @JoinColumn(name = "supplierCode", referencedColumnName = "supplierCode")
     @JoinColumn(name = "name", referencedColumnName = "name")
