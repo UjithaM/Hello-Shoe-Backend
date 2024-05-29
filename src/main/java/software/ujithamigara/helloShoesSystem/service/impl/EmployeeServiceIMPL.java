@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import software.ujithamigara.helloShoesSystem.dao.EmployeeRepo;
 import software.ujithamigara.helloShoesSystem.dto.EmployeeDTO;
+import software.ujithamigara.helloShoesSystem.entity.CustomerEntity;
+import software.ujithamigara.helloShoesSystem.entity.EmployeeEntity;
 import software.ujithamigara.helloShoesSystem.service.EmployeeService;
 import software.ujithamigara.helloShoesSystem.util.Mapping;
 
@@ -19,7 +21,9 @@ public class EmployeeServiceIMPL implements EmployeeService {
     private final Mapping mapping;
     @Override
     public EmployeeDTO saveEmployee(EmployeeDTO employeeDTO) {
-        employeeDTO.setEmployeeCode(UUID.randomUUID().toString());
+        long employeeCount = repo.count();
+        String employeeCode = String.format("E%04d", employeeCount + 1);
+        employeeDTO.setEmployeeCode(employeeCode);
         return mapping.toEmployeeDTO(repo.save(mapping.toEmployeeEntity(employeeDTO)));
     }
 
@@ -40,6 +44,25 @@ public class EmployeeServiceIMPL implements EmployeeService {
 
     @Override
     public void updateEmployee(String employeeId, EmployeeDTO employeeDTO) {
-        repo.save(mapping.toEmployeeEntity(employeeDTO));
+        EmployeeEntity employeeEntity = repo.findById(employeeId).get();
+        employeeEntity.setName(employeeDTO.getName());
+        employeeEntity.setProfilePicture(employeeDTO.getProfilePicture());
+        employeeEntity.setGender(employeeDTO.getGender());
+        employeeEntity.setCivilStatus(employeeDTO.getCivilStatus());
+        employeeEntity.setDesignation(employeeDTO.getDesignation());
+        employeeEntity.setRole(employeeDTO.getRole());
+        employeeEntity.setDob(employeeDTO.getDob());
+        employeeEntity.setJoinedDate(employeeDTO.getJoinedDate());
+        employeeEntity.setAttachedBranch(employeeDTO.getAttachedBranch());
+        employeeEntity.setAddressNo(employeeDTO.getAddressNo());
+        employeeEntity.setLane(employeeDTO.getLane());
+        employeeEntity.setMainCity(employeeDTO.getMainCity());
+        employeeEntity.setMainState(employeeDTO.getMainState());
+        employeeEntity.setPostalCode(employeeDTO.getPostalCode());
+        employeeEntity.setContactNumber(employeeDTO.getContactNumber());
+        employeeEntity.setEmail(employeeDTO.getEmail());
+        employeeEntity.setGuardianName(employeeDTO.getGuardianName());
+        employeeEntity.setGuardianContact(employeeDTO.getGuardianContact());
+        repo.save(employeeEntity);
     }
 }
