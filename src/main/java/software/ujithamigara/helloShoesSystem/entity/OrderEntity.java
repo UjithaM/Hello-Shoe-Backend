@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -15,7 +16,7 @@ import java.util.List;
 public class OrderEntity implements SuperEntity{
     @Id
     private String orderNo;
-    private String purchaseDate;
+    private Date purchaseDate;
     private String paymentMethod;
     private double totalPrice;
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
