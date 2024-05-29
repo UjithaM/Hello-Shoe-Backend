@@ -68,7 +68,9 @@ public class Mapping {
     }
     //ItemMapping
     public ItemDTO toItemDTO(ItemEntity itemEntity) {
-        return  mapper.map(itemEntity, ItemDTO.class);
+        ItemDTO itemDTO = mapper.map(itemEntity, ItemDTO.class);
+        itemDTO.setSupplierCode(itemEntity.getSupplierEntity().getSupplierCode());
+        return  itemDTO;
     }
     public ItemEntity toItemEntity(ItemDTO itemDTO) {
         return  mapper.map(itemDTO, ItemEntity.class);
