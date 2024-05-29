@@ -21,7 +21,11 @@ public class SupplierServiceIMPL implements SupplierService {
 
     @Override
     public SupplierDTO saveSupplier(SupplierDTO supplierDTO) {
-        supplierDTO.setSupplierCode(UUID.randomUUID().toString());
+        long supplierCount = repo.count();
+
+        String supplierCode = String.format("S%04d", supplierCount + 1);
+
+        supplierDTO.setSupplierCode(supplierCode);
         return mapping.toSupplierDTO(repo.save(mapping.toSupplierEntity(supplierDTO)));
     }
 
