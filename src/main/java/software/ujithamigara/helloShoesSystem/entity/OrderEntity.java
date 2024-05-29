@@ -21,6 +21,8 @@ public class OrderEntity implements SuperEntity{
     private double totalPrice;
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<Order_item> orderItems;
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+    private List<OrderAccessories> orderAccessories;
     @ManyToOne
     @JoinColumn(name = "customerCode", referencedColumnName = "customerCode")
     private CustomerEntity customerEntity;
