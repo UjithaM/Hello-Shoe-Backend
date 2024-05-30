@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import software.ujithamigara.helloShoesSystem.entity.enums.AccessoriesVerities;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @Data
 @Table(name = "accessories")
 @Entity
-public class AccessoriesEntity {
+public class AccessoriesEntity implements SuperEntity {
     @Id
     private String accessoriesCode;
     private String accessoriesDescription;
@@ -28,6 +29,7 @@ public class AccessoriesEntity {
     @JoinColumn(name = "supplierCode", referencedColumnName = "supplierCode")
     @JoinColumn(name = "name", referencedColumnName = "name")
     private SupplierEntity supplierEntity;
+    @ToString.Exclude
     @OneToMany (mappedBy = "accessoriesEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderAccessoriesEntity> orderAccessories;
 }
