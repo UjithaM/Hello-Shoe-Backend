@@ -10,6 +10,7 @@ import software.ujithamigara.helloShoesSystem.dto.OrderDTO;
 import software.ujithamigara.helloShoesSystem.entity.*;
 import software.ujithamigara.helloShoesSystem.entity.enums.Level;
 import software.ujithamigara.helloShoesSystem.exception.NotFoundException;
+import software.ujithamigara.helloShoesSystem.exception.QuantityExceededException;
 import software.ujithamigara.helloShoesSystem.service.OrderService;
 import software.ujithamigara.helloShoesSystem.util.Mapping;
 
@@ -53,7 +54,12 @@ public class OrderServiceIMPL implements OrderService {
         orderEntity.setOrderItems(orderDTO.getOrderItems().stream().map(orderItemDTO -> {
             ItemEntity item = itemRepo.findById(orderItemDTO.getItemCode())
                     .orElseThrow(() -> new NotFoundException("Item not found"));
-            item.setQuantity(item.getQuantity() - orderItemDTO.getQuantity());
+            int quantity = item.getQuantity() - orderItemDTO.getQuantity();
+            if (quantity < 0) {
+                logger.warn("Item out of stock: {}", item.getItemCode());
+                throw new QuantityExceededException("Quantity for accessory " + item.getItemCode() + " cannot be less than zero.");
+            }
+            item.setQuantity(quantity);
             itemRepo.save(item);
 
             OrderItemEntity orderItemEntity = new OrderItemEntity();
@@ -66,7 +72,12 @@ public class OrderServiceIMPL implements OrderService {
         orderEntity.setOrderAccessories(orderDTO.getOrderAccessories().stream().map(orderAccessoriesDTO -> {
             AccessoriesEntity accessories = accessoriesRepo.findById(orderAccessoriesDTO.getAccessoriesCode())
                     .orElseThrow(() -> new NotFoundException("Accessories not found"));
-            accessories.setQuantity(accessories.getQuantity() - orderAccessoriesDTO.getQuantity());
+            int quantity = accessories.getQuantity() - orderAccessoriesDTO.getQuantity();
+            if (quantity < 0) {
+                logger.warn("Accessories out of stock: {}", accessories.getAccessoriesCode());
+                throw new QuantityExceededException("Quantity for accessory " + accessories.getAccessoriesCode() + " cannot be less than zero.");
+            }
+            accessories.setQuantity(quantity);
             accessoriesRepo.save(accessories);
 
             OrderAccessoriesEntity orderAccessoriesEntity = new OrderAccessoriesEntity();
