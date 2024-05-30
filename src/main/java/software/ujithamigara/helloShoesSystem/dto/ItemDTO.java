@@ -4,8 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import software.ujithamigara.helloShoesSystem.entity.SupplierEntity;
-import software.ujithamigara.helloShoesSystem.entity.Order_item;
+import software.ujithamigara.helloShoesSystem.entity.OrderItemEntity;
 import software.ujithamigara.helloShoesSystem.entity.enums.Gender;
 import software.ujithamigara.helloShoesSystem.entity.enums.Occasion;
 import software.ujithamigara.helloShoesSystem.entity.enums.Verities;
@@ -59,5 +58,5 @@ public class ItemDTO {
     @NotNull(message = "Supplier entity cannot be null")
     private String supplierCode;
 
-    private List<Order_item> orderItems;
+    private List<OrderItemEntity> orderItems;
 }

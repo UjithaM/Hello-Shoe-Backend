@@ -38,6 +38,6 @@ public class ItemEntity implements SuperEntity{
     @JoinColumn(name = "supplierCode", referencedColumnName = "supplierCode")
     @JoinColumn(name = "name", referencedColumnName = "name")
     private SupplierEntity supplierEntity;
-    @OneToMany (mappedBy = "item", cascade = CascadeType.ALL)
-    private List<Order_item> orderItems;
+    @OneToMany (mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderItemEntity> orderItems;
 }

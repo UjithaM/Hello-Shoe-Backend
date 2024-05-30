@@ -19,10 +19,10 @@ public class OrderEntity implements SuperEntity{
     private Date purchaseDate;
     private String paymentMethod;
     private double totalPrice;
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
-    private List<Order_item> orderItems;
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
-    private List<OrderAccessories> orderAccessories;
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderItemEntity> orderItems;
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderAccessoriesEntity> orderAccessories;
     @ManyToOne
     @JoinColumn(name = "customerCode", referencedColumnName = "customerCode")
     private CustomerEntity customerEntity;

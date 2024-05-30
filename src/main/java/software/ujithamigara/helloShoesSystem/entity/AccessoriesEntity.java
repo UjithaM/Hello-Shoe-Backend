@@ -28,6 +28,6 @@ public class AccessoriesEntity {
     @JoinColumn(name = "supplierCode", referencedColumnName = "supplierCode")
     @JoinColumn(name = "name", referencedColumnName = "name")
     private SupplierEntity supplierEntity;
-    @OneToMany (mappedBy = "accessoriesEntity", cascade = CascadeType.ALL)
-    private List<OrderAccessories> orderAccessories;
+    @OneToMany (mappedBy = "accessoriesEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderAccessoriesEntity> orderAccessories;
 }

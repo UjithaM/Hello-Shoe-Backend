@@ -80,42 +80,29 @@ public class Mapping {
                 .map(itemEntity -> mapper.map(itemEntity, ItemDTO.class))
                 .collect(Collectors.toList());
     }
-    //OrderItemMapping
-    public Order_itemDTO toOrderItemDTO(Order_item order_item) {
-        return  mapper.map(order_item, Order_itemDTO.class);
-    }
-    public Order_item toOrderItem(Order_itemDTO order_itemDTO) {
-        return  mapper.map(order_itemDTO, Order_item.class);
-    }
-    public List<Order_itemDTO> toOrderItemDTOList(List<Order_item> order_items) {
-        return order_items.stream()
-                .map(order_item -> mapper.map(order_item, Order_itemDTO.class))
-                .collect(Collectors.toList());
-    }
-    //OrderMapping
     public OrderDTO toOrderDTO(OrderEntity orderEntity) {
-        return  mapper.map(orderEntity, OrderDTO.class);
+        OrderDTO orderDTO = mapper.map(orderEntity, OrderDTO.class);
+        orderDTO.setCustomerCode(orderEntity.getCustomerEntity().getCustomerCode());
+        orderDTO.setEmployeeCode(orderEntity.getEmployeeEntity().getEmployeeCode());
+        orderDTO.setOrderItems(new ArrayList<>());
+        for (OrderItemEntity orderItemEntity : orderEntity.getOrderItems()) {
+            OrderItemDTO order_itemDTO = new OrderItemDTO();
+            order_itemDTO.setItemCode(orderItemEntity.getItem().getItemCode());
+            order_itemDTO.setQuantity(orderItemEntity.getQuantity());
+            orderDTO.getOrderItems().add(order_itemDTO);
+        }
+        orderDTO.setOrderAccessories(new ArrayList<>());
+        for (OrderAccessoriesEntity orderAccessoriesEntity : orderEntity.getOrderAccessories()) {
+            OrderAccessoriesDTO orderAccessoriesDTO = new OrderAccessoriesDTO();
+            orderAccessoriesDTO.setAccessoriesCode(orderAccessoriesEntity.getAccessoriesEntity().getAccessoriesCode());
+            orderAccessoriesDTO.setQuantity(orderAccessoriesEntity.getQuantity());
+            orderDTO.getOrderAccessories().add(orderAccessoriesDTO);
+        }
+        return  orderDTO;
     }
     public OrderEntity toOrderEntity(OrderDTO orderDTO) {
 
         return  mapper.map(orderDTO, OrderEntity.class);
-    }
-    public OrderEntity toOrderEntity(OrderDTO orderDTO, List<Order_itemDTO> orderItemDTOS) {
-        return mapper.map(orderDTO, OrderEntity.class);
-    }
-    public List<Order_item> toOrderItemList(List<Order_itemDTO> order_itemDTOS) {
-        List<Order_item> order_items = new ArrayList<>();
-
-        for (Order_itemDTO order_itemDTO : order_itemDTOS) {
-            OrderEntity orderEntity = toOrderEntity(order_itemDTO.getOrderDTO());
-            ItemEntity itemEntity = toItemEntity(order_itemDTO.getItemDTO());
-            Order_item order_item = new Order_item();
-            order_item.setOrders(orderEntity);
-            order_item.setItem(itemEntity);
-            order_item.setQuantity(order_itemDTO.getQuantity());
-            order_items.add(order_item);
-        }
-        return order_items;
     }
     public List<OrderDTO> toOrderDTOList(List<OrderEntity> orderEntities) {
         return orderEntities.stream()

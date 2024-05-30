@@ -27,6 +27,7 @@ public class OrderServiceIMPL implements OrderService {
     private final CustomerRepo customerRepo;
     private final ItemRepo itemRepo;
     private final AccessoriesRepo accessoriesRepo;
+    private final EmployeeRepo employeeRepo;
     private final Mapping mapping;
 
     @Override
@@ -39,34 +40,44 @@ public class OrderServiceIMPL implements OrderService {
                 .orElseThrow(() -> new NotFoundException("Customer not found"));
 
         updateCustomerPointsAndLevel(customer, orderDTO.getTotalPrice());
-        customer.setRecentPurchaseDate(Timestamp.valueOf(orderDTO.getPurchaseDate().toString()));
+        customer.setRecentPurchaseDate(new Timestamp(orderDTO.getPurchaseDate().getTime()));
         customerRepo.save(customer);
 
-        for (Order_item orderItem : orderDTO.getOrderItems()) {
-            ItemEntity item = itemRepo.findById(orderItem.getItem().getItemCode())
+        OrderEntity orderEntity = mapping.toOrderEntity(orderDTO);
+
+        orderEntity.setCustomerEntity(customer);
+
+        orderEntity.setEmployeeEntity(employeeRepo.findById(orderDTO.getEmployeeCode())
+                .orElseThrow(() -> new NotFoundException("Employee not found")));
+
+        orderEntity.setOrderItems(orderDTO.getOrderItems().stream().map(orderItemDTO -> {
+            ItemEntity item = itemRepo.findById(orderItemDTO.getItemCode())
                     .orElseThrow(() -> new NotFoundException("Item not found"));
-
-            int newQuantity = item.getQuantity() - orderItem.getQuantity();
-            if (newQuantity < 0) {
-                throw new RuntimeException("Insufficient stock for item: " + item.getItemDescription());
-            }
-            item.setQuantity(newQuantity);
+            item.setQuantity(item.getQuantity() - orderItemDTO.getQuantity());
             itemRepo.save(item);
-        }
 
-        for (OrderAccessories orderAccessories : orderDTO.getOrderAccessories()) {
-            AccessoriesEntity accessories = accessoriesRepo.findById(orderAccessories.getAccessoriesEntity().getAccessoriesCode())
+            OrderItemEntity orderItemEntity = new OrderItemEntity();
+            orderItemEntity.setItem(item);
+            orderItemEntity.setOrders(orderEntity);
+            orderItemEntity.setQuantity(orderItemDTO.getQuantity());
+            return orderItemEntity;
+        }).toList());
+
+        orderEntity.setOrderAccessories(orderDTO.getOrderAccessories().stream().map(orderAccessoriesDTO -> {
+            AccessoriesEntity accessories = accessoriesRepo.findById(orderAccessoriesDTO.getAccessoriesCode())
                     .orElseThrow(() -> new NotFoundException("Accessories not found"));
-            int newQuantity = accessories.getQuantity() - orderAccessories.getQuantity();
-            if (newQuantity < 0) {
-                throw new RuntimeException("Insufficient stock for accessories: " + accessories.getAccessoriesDescription());
-            }
-            accessories.setQuantity(newQuantity);
+            accessories.setQuantity(accessories.getQuantity() - orderAccessoriesDTO.getQuantity());
             accessoriesRepo.save(accessories);
-        }
+
+            OrderAccessoriesEntity orderAccessoriesEntity = new OrderAccessoriesEntity();
+            orderAccessoriesEntity.setAccessoriesEntity(accessories);
+            orderAccessoriesEntity.setOrders(orderEntity);
+            orderAccessoriesEntity.setQuantity(orderAccessoriesDTO.getQuantity());
+            return orderAccessoriesEntity;
+        }).toList());
 
         logger.info("Order placed successfully: {}", orderCodeString);
-        return mapping.toOrderDTO(orderRepo.save(mapping.toOrderEntity(orderDTO)));
+        return mapping.toOrderDTO(orderRepo.save(orderEntity));
     }
 
     private void updateCustomerPointsAndLevel(CustomerEntity customer, double totalPrice) {

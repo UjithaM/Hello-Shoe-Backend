@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "order_item")
 @Entity
-public class Order_item implements SuperEntity{
+public class OrderItemEntity implements SuperEntity{
     @Id
     @ManyToOne
     @JoinColumn(name = "orderNo", referencedColumnName = "orderNo")
