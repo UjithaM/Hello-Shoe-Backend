@@ -58,5 +58,4 @@ public class ItemDTO {
     @NotNull(message = "Supplier entity cannot be null")
     private String supplierCode;
 
-    private List<OrderItemEntity> orderItems;
 }
