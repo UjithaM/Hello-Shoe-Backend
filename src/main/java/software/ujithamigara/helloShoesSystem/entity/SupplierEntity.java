@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import software.ujithamigara.helloShoesSystem.entity.enums.Category;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class SupplierEntity implements SuperEntity{
     private String landlineNumber;
     @Column(unique = true)
     private String email;
+    @ToString.Exclude
     @OneToMany(mappedBy = "supplierEntity")
     private List<ItemEntity> itemEntities;
 }

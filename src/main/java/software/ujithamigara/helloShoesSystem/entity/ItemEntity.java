@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import software.ujithamigara.helloShoesSystem.entity.enums.Gender;
 import software.ujithamigara.helloShoesSystem.entity.enums.Occasion;
 import software.ujithamigara.helloShoesSystem.entity.enums.Verities;
@@ -38,6 +39,7 @@ public class ItemEntity implements SuperEntity{
     @JoinColumn(name = "supplierCode", referencedColumnName = "supplierCode")
     @JoinColumn(name = "name", referencedColumnName = "name")
     private SupplierEntity supplierEntity;
+    @ToString.Exclude
     @OneToMany (mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItemEntity> orderItems;
 }
