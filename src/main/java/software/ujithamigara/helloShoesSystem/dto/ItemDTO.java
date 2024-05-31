@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import software.ujithamigara.helloShoesSystem.entity.OrderItemEntity;
 import software.ujithamigara.helloShoesSystem.entity.enums.Gender;
 import software.ujithamigara.helloShoesSystem.entity.enums.Occasion;
@@ -20,6 +21,7 @@ public class ItemDTO {
     @NotBlank(message = "Item description cannot be blank")
     private String itemDescription;
 
+    @ToString.Exclude
     private String itemPicture;
 
     @NotBlank(message = "Item category cannot be blank")
@@ -56,6 +58,6 @@ public class ItemDTO {
     private Gender gender;
 
     @NotNull(message = "Supplier entity cannot be null")
-    private String supplierCode;
+        private String supplierCode;
 
 }

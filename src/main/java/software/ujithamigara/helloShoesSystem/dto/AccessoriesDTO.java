@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import software.ujithamigara.helloShoesSystem.entity.enums.AccessoriesVerities;
 
 @AllArgsConstructor
@@ -15,6 +16,7 @@ public class AccessoriesDTO {
     @NotBlank(message = "Accessories description cannot be blank")
     private String accessoriesDescription;
 
+    @ToString.Exclude
     @NotBlank(message = "Accessories picture cannot be blank")
     private String accessoriesPicture;
 
@@ -39,6 +41,4 @@ public class AccessoriesDTO {
     @NotNull(message = "Supplier supplierCode cannot be null")
     private String supplierCode;
 
-    @NotNull(message = "Supplier name cannot be null")
-    private String supplierName;
 }

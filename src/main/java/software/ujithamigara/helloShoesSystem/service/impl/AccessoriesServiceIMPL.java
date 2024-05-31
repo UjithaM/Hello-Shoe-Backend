@@ -39,7 +39,6 @@ public class AccessoriesServiceIMPL implements AccessoriesService {
         accessories.setSupplierEntity(supplier);
         AccessoriesDTO savedAccessoriesDTO = mapping.toAccessoriesDTO(accessoriesRepo.save(accessories));
         savedAccessoriesDTO.setSupplierCode(supplier.getSupplierCode());
-        savedAccessoriesDTO.setSupplierName(supplier.getName());
 
         logger.info("Accessory saved successfully: {}", savedAccessoriesDTO.getAccessoriesCode());
         return savedAccessoriesDTO;
@@ -63,7 +62,6 @@ public class AccessoriesServiceIMPL implements AccessoriesService {
 
         AccessoriesDTO accessoriesDTO = mapping.toAccessoriesDTO(accessories);
         accessoriesDTO.setSupplierCode(accessories.getSupplierEntity().getSupplierCode());
-        accessoriesDTO.setSupplierName(accessories.getSupplierEntity().getName());
 
         logger.info("Accessory retrieved: {}", accessoriesCode);
         return accessoriesDTO;
@@ -82,7 +80,7 @@ public class AccessoriesServiceIMPL implements AccessoriesService {
                 .orElseThrow(() -> new NotFoundException("Accessory not found" + accessoriesDTO.getAccessoriesDescription()));
 
         SupplierEntity supplier = supplierRepo.findById(accessoriesDTO.getSupplierCode())
-                .orElseThrow(() -> new NotFoundException("Supplier not found" + accessoriesDTO.getSupplierName()));
+                .orElseThrow(() -> new NotFoundException("Supplier not found" + accessoriesDTO.getSupplierCode()));
 
         accessories.setAccessoriesDescription(accessoriesDTO.getAccessoriesDescription());
         accessories.setAccessoriesPicture(accessoriesDTO.getAccessoriesPicture());

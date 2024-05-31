@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import software.ujithamigara.helloShoesSystem.entity.enums.Gender;
 import software.ujithamigara.helloShoesSystem.entity.enums.Role;
 
@@ -18,6 +19,7 @@ public class EmployeeDTO {
     @NotBlank(message = "Name cannot be blank")
     private String name;
 
+    @ToString.Exclude
     private String profilePicture;
 
     @NotNull(message = "Gender cannot be null")

@@ -18,12 +18,14 @@ public class AccessoriesEntity implements SuperEntity {
     @Id
     private String accessoriesCode;
     private String accessoriesDescription;
+    @Column(columnDefinition = "LONGTEXT")
     private String accessoriesPicture;
     private double unitPriceSell;
     private double unitPriceBuy;
     private double expectedProfit;
     private double profitMargin;
     private int quantity;
+    @Enumerated(EnumType.STRING)
     private AccessoriesVerities accessoriesVerities;
     @ManyToOne
     @JoinColumn(name = "supplierCode", referencedColumnName = "supplierCode")
