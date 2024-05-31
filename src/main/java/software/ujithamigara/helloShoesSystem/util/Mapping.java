@@ -77,7 +77,13 @@ public class Mapping {
     }
     public List<ItemDTO> toItemDTOList(List<ItemEntity> itemEntities) {
         return itemEntities.stream()
-                .map(itemEntity -> mapper.map(itemEntity, ItemDTO.class))
+                .map(itemEntity -> {
+                    ItemDTO itemDTO = mapper.map(itemEntity, ItemDTO.class);
+                    if (itemEntity.getSupplierEntity() != null) {
+                        itemDTO.setSupplierCode(itemEntity.getSupplierEntity().getSupplierCode());
+                    }
+                    return itemDTO;
+                })
                 .collect(Collectors.toList());
     }
     public OrderDTO toOrderDTO(OrderEntity orderEntity) {
@@ -130,7 +136,13 @@ public class Mapping {
     }
     public List<AccessoriesDTO> toAccessoriesDTOList(List<AccessoriesEntity> accessoriesEntities) {
         return accessoriesEntities.stream()
-                .map(accessoriesEntity -> mapper.map(accessoriesEntity, AccessoriesDTO.class))
+                .map(accessoriesEntity -> {
+                    AccessoriesDTO accessoriesDTO = mapper.map(accessoriesEntity, AccessoriesDTO.class);
+                    if (accessoriesEntity.getSupplierEntity() != null) {
+                        accessoriesDTO.setSupplierCode(accessoriesEntity.getSupplierEntity().getSupplierCode());
+                    }
+                    return accessoriesDTO;
+                })
                 .collect(Collectors.toList());
     }
 }
