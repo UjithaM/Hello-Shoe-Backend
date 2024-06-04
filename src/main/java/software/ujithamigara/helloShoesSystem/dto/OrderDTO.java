@@ -23,10 +23,8 @@ public class OrderDTO {
     @PositiveOrZero(message = "Total price must be positive or zero")
     private double totalPrice;
 
-    @NotEmpty(message = "Order items cannot be empty")
     private List<OrderItemDTO> orderItems;
 
-    @NotEmpty(message = "Order accessories cannot be empty")
     private List<OrderAccessoriesDTO> orderAccessories;
 
     @NotNull(message = "customerCode cannot be null")
