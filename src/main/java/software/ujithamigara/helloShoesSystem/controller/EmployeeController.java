@@ -31,6 +31,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> saveEmployee(@Validated @RequestBody EmployeeDTO employeeDTO, BindingResult bindingResult) {
         logger.info("Saving employee details");
         if (bindingResult.hasErrors()) {
@@ -47,7 +48,6 @@ public class EmployeeController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllEmployees() {
         logger.info("Fetching all employees");
         try {
@@ -74,6 +74,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateEmployee(@PathVariable String id, @Validated @RequestBody EmployeeDTO employeeDTO, BindingResult bindingResult) {
         logger.info("Updating employee with ID: {}", id);
         if (bindingResult.hasErrors()) {
@@ -90,6 +91,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteEmployee(@PathVariable String id) {
         logger.info("Deleting employee with ID: {}", id);
         try {

@@ -31,6 +31,7 @@ public class SupplierController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> saveSupplier(@Validated @RequestBody SupplierDTO supplierDTO, BindingResult bindingResult) {
         logger.info("Saving supplier details");
         if (bindingResult.hasErrors()) {
@@ -47,7 +48,6 @@ public class SupplierController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllSupplier() {
         logger.info("Fetching all suppliers");
         try {
@@ -74,6 +74,7 @@ public class SupplierController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateSupplier(@PathVariable String id, @Validated @RequestBody SupplierDTO supplierDTO, BindingResult bindingResult) {
         logger.info("Updating supplier with ID: {}", id);
         if (bindingResult.hasErrors()) {
@@ -90,6 +91,7 @@ public class SupplierController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteSupplier(@PathVariable String id) {
         logger.info("Deleting supplier with ID: {}", id);
         try {
