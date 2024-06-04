@@ -30,7 +30,7 @@ public class UserController {
         try {
             JwtAuthResponse jwtAuthResponse = authenticationService.signUp(signUpReq);
             if (jwtAuthResponse == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already in use. Please use a different email.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("you don't have permission to sign up or user already exists.");
             } else {
                 return ResponseEntity.ok(jwtAuthResponse);
             }

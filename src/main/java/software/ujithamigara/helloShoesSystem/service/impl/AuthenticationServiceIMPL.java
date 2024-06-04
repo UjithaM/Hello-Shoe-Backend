@@ -43,12 +43,14 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
         var userByEmail = userRepo.findByEmail(signIn.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
        var generatedToken = jwtService.generateToken(userByEmail);
-       return JwtAuthResponse.builder().token(generatedToken).build() ;
+       JwtAuthResponse jwtAuthResponse = JwtAuthResponse.builder().token(generatedToken).build();
+       jwtAuthResponse.setEmployeeCode(employeeService.getEmployeeByEmail(signIn.getEmail()).getEmployeeCode());
+       return jwtAuthResponse ;
     }
 
     @Override
     public JwtAuthResponse signUp(SignUp signUp) {
-        if (checkEmployeeEmailAndUserEmail(signUp)) {
+        if (checkEmployeeEmail(signUp) && checkUserEmail(signUp)) {
             var buildUser = UserDTO.builder()
                     .id(UUID.randomUUID().toString())
                     .email(signUp.getEmail())
@@ -59,19 +61,25 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
                     .build();
             var savedUser = userRepo.save(mapping.toUserEntity(buildUser));
             var genToken = jwtService.generateToken(savedUser);
-            return JwtAuthResponse.builder().token(genToken).build();
+            JwtAuthResponse jwtAuthResponse = JwtAuthResponse.builder().token(genToken).build();
+            jwtAuthResponse.setEmployeeCode(employeeService.getEmployeeByEmail(signUp.getEmail()).getEmployeeCode());
+            return jwtAuthResponse;
         }
         return null;
     }
-    private boolean checkEmployeeEmailAndUserEmail(SignUp signUp) {
-        logger.info("Checking if email is already in use");
+    private boolean checkEmployeeEmail(SignUp signUp) {
+        logger.info("checking if email is already in use by employee");
         List<EmployeeDTO> emails = employeeService.getAllEmployee();
-        List<UserDTO> users = mapping.toUserDTOList(userRepo.findAll());
         for (EmployeeDTO employee : emails) {
             if (employee.getEmail().equals(signUp.getEmail())) {
-                return false;
+                return true;
             }
         }
+        return false;
+    }
+    private boolean checkUserEmail(SignUp signUp) {
+        logger.info("Checking if email is already in use");
+        List<UserDTO> users = mapping.toUserDTOList(userRepo.findAll());
         for (UserDTO user : users) {
             if (user.getEmail().equals(signUp.getEmail())) {
                 return false;

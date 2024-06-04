@@ -91,4 +91,16 @@ public class EmployeeServiceIMPL implements EmployeeService {
         repo.save(employeeEntity);
         logger.info("Employee updated: {}", employeeEntity);
     }
+
+    @Override
+    public EmployeeDTO getEmployeeByEmail(String email) {
+        EmployeeDTO employeeDTO = repo.findByEmail(email)
+                .map(mapping::toEmployeeDTO)
+                .orElseThrow(() -> {
+                    logger.warn("Employee not found: {}", email);
+                    return new NotFoundException("Employee not found with email: " + email);
+                });
+        logger.info("Employee retrieved: {}", employeeDTO);
+        return employeeDTO;
+    }
 }

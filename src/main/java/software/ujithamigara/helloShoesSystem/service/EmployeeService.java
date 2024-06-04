@@ -11,4 +11,5 @@ public interface EmployeeService {
     EmployeeDTO getSelectedEmployee(String employeeId);
     List<EmployeeDTO> getAllEmployee();
     void updateEmployee(String employeeId,EmployeeDTO employeeDTO);
+    EmployeeDTO getEmployeeByEmail(String email);
 }
