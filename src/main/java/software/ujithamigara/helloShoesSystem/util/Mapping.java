@@ -112,9 +112,19 @@ public class Mapping {
     }
     public List<OrderDTO> toOrderDTOList(List<OrderEntity> orderEntities) {
         return orderEntities.stream()
-                .map(orderEntity -> mapper.map(orderEntity, OrderDTO.class))
+                .map(orderEntity -> {
+                    OrderDTO orderDTO = mapper.map(orderEntity, OrderDTO.class);
+                    if (orderEntity.getCustomerEntity() != null) {
+                        orderDTO.setCustomerCode(orderEntity.getCustomerEntity().getCustomerCode());
+                    }
+                    if (orderEntity.getEmployeeEntity() != null) {
+                        orderDTO.setEmployeeCode(orderEntity.getEmployeeEntity().getEmployeeCode());
+                    }
+                    return orderDTO;
+                })
                 .collect(Collectors.toList());
     }
+
     //RefundMapping
     public RefundDTO toRefundDTO(RefundEntity refundEntity) {
         return  mapper.map(refundEntity, RefundDTO.class);
