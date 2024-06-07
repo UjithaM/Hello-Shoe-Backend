@@ -104,16 +104,6 @@ public class OrderServiceIMPL implements OrderService {
         }
     }
 
-    @Override
-    public void deleteOrder(String orderCode) {
-        if (orderRepo.existsById(orderCode)) {
-            orderRepo.deleteById(orderCode);
-            logger.info("Order deleted: {}", orderCode);
-        } else {
-            logger.warn("Order not found: {}", orderCode);
-            throw new NotFoundException("Order not found");
-        }
-    }
 
     @Override
     public OrderDTO getSelectedOrder(String orderCode) {

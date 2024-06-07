@@ -87,16 +87,5 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteOrder(@PathVariable String id) {
-        logger.info("Deleting order with ID: {}", id);
-        try {
-            orderService.deleteOrder(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } catch (Exception exception) {
-            logger.error("Error deleting order: ", exception);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Internal server error | Unable to delete order.\nMore Details\n" + exception);
-        }
-    }
+
 }
