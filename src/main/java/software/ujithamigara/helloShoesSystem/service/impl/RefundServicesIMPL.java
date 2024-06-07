@@ -25,6 +25,10 @@ public class RefundServicesIMPL implements RefundServices {
 
     @Override
     public RefundDTO saveRefund(RefundDTO refundDTO) {
+        long refundCount = refundRepo.count();
+        String refCode = String.format("R%04d", refundCount + 1);
+        refundDTO.setRefundId(refCode);
+
         return mapping.toRefundDTO(refundRepo.save(mapping.toRefundEntity(refundDTO)));
     }
 
