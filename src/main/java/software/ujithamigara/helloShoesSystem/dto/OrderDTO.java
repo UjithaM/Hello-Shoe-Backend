@@ -27,7 +27,6 @@ public class OrderDTO {
 
     private List<OrderAccessoriesDTO> orderAccessories;
 
-    @NotNull(message = "customerCode cannot be null")
     private String customerCode;
 
     @NotNull(message = "employeeCode cannot be null")

@@ -37,12 +37,15 @@ public class OrderServiceIMPL implements OrderService {
         String orderCodeString = String.format("O%04d", orderCode + 1);
         orderDTO.setOrderNo(orderCodeString);
 
-        CustomerEntity customer = customerRepo.findById(orderDTO.getCustomerCode())
-                .orElseThrow(() -> new NotFoundException("Customer not found"));
+        CustomerEntity customer = null;
+        if (orderDTO.getCustomerCode() != null){
+            customer = customerRepo.findById(orderDTO.getCustomerCode())
+                    .orElseThrow(() -> new NotFoundException("Customer not found"));
+            updateCustomerPointsAndLevel(customer, orderDTO.getTotalPrice());
+            customer.setRecentPurchaseDate(new Timestamp(orderDTO.getPurchaseDate().getTime()));
+            customerRepo.save(customer);
+        }
 
-        updateCustomerPointsAndLevel(customer, orderDTO.getTotalPrice());
-        customer.setRecentPurchaseDate(new Timestamp(orderDTO.getPurchaseDate().getTime()));
-        customerRepo.save(customer);
 
         OrderEntity orderEntity = mapping.toOrderEntity(orderDTO);
 

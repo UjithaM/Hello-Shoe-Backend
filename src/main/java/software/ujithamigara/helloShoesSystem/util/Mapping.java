@@ -88,7 +88,9 @@ public class Mapping {
     }
     public OrderDTO toOrderDTO(OrderEntity orderEntity) {
         OrderDTO orderDTO = mapper.map(orderEntity, OrderDTO.class);
-        orderDTO.setCustomerCode(orderEntity.getCustomerEntity().getCustomerCode());
+        if (orderEntity.getCustomerEntity() != null){
+            orderDTO.setCustomerCode(orderEntity.getCustomerEntity().getCustomerCode());
+        }
         orderDTO.setEmployeeCode(orderEntity.getEmployeeEntity().getEmployeeCode());
         orderDTO.setOrderItems(new ArrayList<>());
         for (OrderItemEntity orderItemEntity : orderEntity.getOrderItems()) {
